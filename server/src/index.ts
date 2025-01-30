@@ -11,11 +11,6 @@ const MONGO_URI = process.env.MONGO_URI as string;
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
 
-
-
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
-
 mongoose.connect(MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
