@@ -27,7 +27,7 @@ const resolvers: IResolvers = {
             const savedUser = await newUser.save();
 
             const token = jwt.sign({id: savedUser.id, email: savedUser.email}, SECRET_KEY, {expiresIn: "1h"});
-            return {...savedUser._doc, id: savedUser.id, token}
+            return {...savedUser.toObject(), id: savedUser.id, token}
 
         },
         login: async (_, {email, password}) => {
@@ -39,7 +39,7 @@ const resolvers: IResolvers = {
             if (!isPasswordValid) throw new Error("Invalid password");
 
             const token = jwt.sign({id: user.id, email: user.email}, SECRET_KEY, {expiresIn: "1h"});
-            return {...user._doc, id: user.id, token}
+            return {...user.toObject(), id: user.id, token}
 
         }
     }

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import typeDefs from "./schema";
 import resolvers from "./resolvers";
-import { verifyToken } from "./utils/auth";
+import { verifyToken } from "../helpers/auth";
 
 dotenv.config();
 
