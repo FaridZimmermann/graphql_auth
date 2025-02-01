@@ -27,7 +27,7 @@ mongoose.connect(MONGO_URI)
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
+  resolvers
 });
 
 async function startServer() {
