@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../../graphql/mutations.ts";
 import { setAuth } from "../../redux/slices/authSlice.ts";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup: React.FC = () => {
   const dispatch = useDispatch();
@@ -68,11 +68,10 @@ const Signup: React.FC = () => {
           </button>
         </form>
         
-        {error && <p className="">{error.message}</p>}
         
         <p className="">
           Already have an account?{" "}
-          <a href="/login" className="">Login</a>
+          <Link to="/login" className="">Login</Link>
         </p>
       </div>
     </div>

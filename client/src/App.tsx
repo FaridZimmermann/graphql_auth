@@ -5,6 +5,7 @@ import { ApolloProvider } from "@apollo/client";
 import client from "./graphql/client.ts"; 
 import store from "./redux/store.ts";
 import Login from "./components/auth/Login.tsx";
+import Signup from "./components/auth/Signup.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
