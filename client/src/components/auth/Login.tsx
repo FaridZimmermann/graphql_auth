@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";
-import { setAuth } from "../../redux/slices/authSlice";
-import { LOGIN_USER } from "../../graphql/mutations";
+import { setAuth } from "../../redux/slices/authSlice.ts";
+import { LOGIN_USER } from "../../graphql/mutations.ts";
 import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
