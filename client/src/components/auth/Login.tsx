@@ -40,37 +40,37 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+    <div className="">
+      <div className="">
+        <h2 className="">Login</h2>
         
-        {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
+        {errorMessage && <p className="">{errorMessage}</p>}
         
-        <form onSubmit={handleLogin} className="flex flex-col">
+        <form onSubmit={handleLogin} className="">
           <input
             type="email"
             placeholder="Email"
-            className="p-2 border rounded mb-3"
+            className=""
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
-            className="p-2 border rounded mb-3"
+            className=""
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
             type="submit"
-            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            className=""
             disabled={loading}
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
         
-        {error && <p className="text-red-500 mt-3 text-center">{error.message}</p>}
+        {error && <p className="">{error.message}</p>}
       </div>
     </div>
   );
