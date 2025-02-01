@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";
-import { setAuth } from "../../redux/slices/appSlice.ts";
-import { LOGIN_USER } from "../graphql/mutations";
+import { setAuth } from "../../redux/slices/authSlice";
+import { LOGIN_USER } from "../../graphql/mutations";
 import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
@@ -18,10 +18,7 @@ const Login: React.FC = () => {
       if (data.login.token) {
         const { token, user } = data.login;
         
-        // Save to Redux & LocalStorage
         dispatch(setAuth({ token, user }));
-        
-        // Redirect to dashboard or home
         navigate("/dashboard");
       }
     },

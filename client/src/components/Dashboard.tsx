@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../redux/appSlice";
+import { logout } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard: React.FC = () => {
