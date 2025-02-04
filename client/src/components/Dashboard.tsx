@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice.ts";
 import { useNavigate } from "react-router-dom";
+import "./Dashboard.css";
+
 
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
@@ -15,13 +17,13 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="">
-      <div className="">
-        <h2 className="">Welcome, {user?.email}!</h2>
-        <p className="">You are logged in.</p>
+    <div className="dashboard-container">
+      <div className="dashboard-card">
+        <h2>Welcome, {user?.email}!</h2>
+        <p>You are logged in.</p>
         <button
           onClick={handleLogout}
-          className=""
+          className="button logout-btn"
         >
           Logout
         </button>

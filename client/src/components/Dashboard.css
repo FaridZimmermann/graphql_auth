@@ -1,5 +1,5 @@
-/* Signup.css */
-.signup-container {
+/* Dashboard.css */
+.dashboard-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,37 +7,25 @@
     min-height: 100vh;
   }
   
-  .signup-card {
+  .dashboard-card {
     background: white;
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 350px;
+    width: 400px;
     text-align: center;
   }
   
-  .signup-card h2 {
-    margin-bottom: 1rem;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 0.9rem;
+  .dashboard-card h2 {
+    color: #333;
     margin-bottom: 10px;
   }
+  
 
 
-  .signup-btn {
+  .logout-btn {
     appearance: none;
-    background-color: #007BFF;
+    background-color: #A71D2A;
     border: 1px solid rgba(27, 31, 35, .15);
     border-radius: 6px;
     box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
@@ -60,30 +48,30 @@
     white-space: nowrap;
   }
   
-  .signup-btn:focus:not(:focus-visible):not(.focus-visible) {
+  .logout-btn:focus:not(:focus-visible):not(.focus-visible) {
     box-shadow: none;
     outline: none;
   }
   
-  .signup-btn:hover {
-    background-color: #007bffe1;
+  .logout-btn:hover {
+    background-color: #7D1520;
   }
   
-  .signup-btn:focus {
-    box-shadow: rgba(32, 53, 162, 0.4) 0 0 0 3px;
+  .logout-btn:focus {
+    box-shadow: rgba(107, 5, 5, 0.4) 0 0 0 3px;
     outline: none;
   }
   
-  .signup-btn:disabled {
+  .logout-btn:disabled {
     background-color: #94d3a2;
     border-color: rgba(27, 31, 35, .1);
     color: rgba(255, 255, 255, .8);
     cursor: default;
   }
   
-  .signup-btn:active {
-    background-color: #007bffbe;
+  .logout-btn:active {
+    background-color: #a71d2bbb;
     box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
   }  
-  
 
+    

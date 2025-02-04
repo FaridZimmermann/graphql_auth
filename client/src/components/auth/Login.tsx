@@ -44,7 +44,7 @@ const Login: React.FC = () => {
         
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         
-        <form onSubmit={handleLogin} className="">
+        <form onSubmit={handleLogin}>
           <input
             type="email"
             placeholder="Email"
@@ -61,7 +61,7 @@ const Login: React.FC = () => {
           />
           <button
             type="submit"
-            className="login-btn"
+            className="button login-btn"
             disabled={loading}
           >
             {loading ? "Logging in..." : "Login"}

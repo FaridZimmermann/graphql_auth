@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../../graphql/mutations.ts";
 import { setAuth } from "../../redux/slices/authSlice.ts";
 import { Link, useNavigate } from "react-router-dom";
+import "./Signup.css";
 
 const Signup: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,30 +40,30 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="">
-      <div className="">
-        <h2 className="">Sign Up</h2>
+    <div className="signup-container">
+      <div className="signup-card">
+        <h2>Sign Up</h2>
         
-        {errorMessage && <p className="">{errorMessage}</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         
-        <form onSubmit={handleSignup} className="">
+        <form onSubmit={handleSignup}>
           <input
             type="email"
             placeholder="Email"
-            className=""
+            className="input-field"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
-            className=""
+            className="input-field"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
             type="submit"
-            className=""
+            className="button signup-btn"
             disabled={loading}
           >
             {loading ? "Signing up..." : "Sign Up"}
@@ -70,9 +71,9 @@ const Signup: React.FC = () => {
         </form>
         
         
-        <p className="">
-          Already have an account?{" "}
-          <Link to="/login" className="">Login</Link>
+        <p>
+          Already have an account?
+          <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
