@@ -5,7 +5,7 @@
 
 <h4>[Important]:</h4>
 To setup demo usage a working MongoDB connection is required.
-Setup your own MongoDB instance or connect to your cloud-based solution, then add in the root of the project an ".env" file with the key [MONGOURI=YourDatabaseURI]
+Setup your own MongoDB instance or connect to your cloud-based solution, then add in the root of the project an ".env" file with the key [MONGO_URI=YourDatabaseURI]. Also please create a secret key for the password token creation to work flawlessly and enter into into your .env file. [SECRET_KEY=examplekey]
 </br>
 
 <h4>[Usage]:</h4>
