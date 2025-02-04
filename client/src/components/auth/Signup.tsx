@@ -24,6 +24,7 @@ const Signup: React.FC = () => {
       }
     },
     onError: (error) => {
+      console.log(error)
       setErrorMessage(error.message);
     },
   });

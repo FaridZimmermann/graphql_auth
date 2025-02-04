@@ -7,7 +7,7 @@ const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const user = useSelector((state: any) => state.app.user);
+  const user = useSelector((state: any) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(logout());

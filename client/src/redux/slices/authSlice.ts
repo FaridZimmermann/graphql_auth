@@ -11,14 +11,16 @@ interface AppState {
   isAuthenticated: boolean;
 }
 
+
+
 const initialState: AppState = {
   token: localStorage.getItem("token") || null,
-  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null,
-  isAuthenticated: !!localStorage.getItem("token"),
+  user: localStorage.getItem("user") !== "undefined" ? JSON.parse(localStorage.getItem("user")!) : null,
+  isAuthenticated: localStorage.getItem("token") !== "undefined",
 };
 
 const appSlice = createSlice({
-  name: "app",
+  name: "auth",
   initialState,
   reducers: {
     setAuth: (state, action: PayloadAction<{ token: string; user: User }>) => {
