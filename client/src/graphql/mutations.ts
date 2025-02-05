@@ -15,3 +15,11 @@ export const REGISTER_USER = gql`
     }
   }
 `;
+
+export const GOOGLE_OAUTH = gql`
+  mutation GoogleOAuth($token: String!) {
+    googleOAuth(token: $token) {
+      token
+    }
+  }
+`;
