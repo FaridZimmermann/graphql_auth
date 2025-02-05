@@ -10,6 +10,16 @@
       content="Web site created using create-react-app"
     />
     <title>React App</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+      window.onload = function () {
+        gapi.load("auth2", function () {
+          gapi.auth2.init({
+            client_id: "1003836802787-6hvinh28d8lsdu5qaagb24uaphfsfbq6.apps.googleusercontent.com",
+          });
+        });
+      };
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

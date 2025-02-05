@@ -30,8 +30,8 @@ const Login: React.FC = () => {
   let googleOAuth;
   [googleOAuth, {loading, error}] = useMutation(GOOGLE_OAUTH, {
     onCompleted: (data) => {
-      if (data.login.token) {
-        const { token, user } = data.login;
+      if (data?.googleOAuth?.token) {
+        const { token, user } = data.googleOAuth;
         
         dispatch(setAuth({ token, user }));
         navigate("/dashboard");
@@ -42,6 +42,16 @@ const Login: React.FC = () => {
     },
   });
 
+  const handleGoogleLogin = async () => {
+    const googleUser = await window.gapi.auth2.getAuthInstance().signIn();
+    const token = googleUser.getAuthResponse().id_token;
+
+     await googleOAuth({ variables: { token } });
+
+  };
+
+
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,22 +60,6 @@ const Login: React.FC = () => {
       return;
     }
     await login({ variables: { email, password } });
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      const googleUser = await window.gapi.auth2.getAuthInstance().signIn();
-      const token = googleUser.getAuthResponse().id_token;
-
-      const { data } = await googleOAuth({ variables: { token } });
-
-      if (data?.googleOAuth?.token) {
-        localStorage.setItem("token", data.googleOAuth.token);
-        window.location.href = "/dashboard";
-      }
-    } catch (error) {
-      console.error("Google OAuth error:", error);
-    }
   };
 
 
