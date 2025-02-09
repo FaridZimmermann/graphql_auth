@@ -1,7 +1,5 @@
 # GraphQLAuth - Full stack authentication system using GraphQL with MongoDB && React/Redux
 
-**LIVE-Example** @
-
 
 <h4>[Important]:</h4>
 To setup demo usage a working MongoDB connection is required.
@@ -19,4 +17,4 @@ Setup your own MongoDB instance or connect to your cloud-based solution, then ad
 
 **BACKEND** - Integrating OAuth with GraphQL </br>
 
-**FRONTEND** - 
+**FRONTEND** - Issue implementing tests, especially configuration with jest as there seems to be some unwanted behaviour due to multithreads run by jest itself (missing console.logs for instance) Not solution found as of yet.
