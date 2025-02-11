@@ -8,6 +8,7 @@ import { useMutation } from "@apollo/client";
 import { setAuth } from "../../redux/slices/authSlice.ts";
 import { LOGIN_USER, GOOGLE_OAUTH } from "../../graphql/mutations.ts";
 import { Link, useNavigate } from "react-router-dom";
+import Error from "../Error.tsx";
 import "./Login.css";
 
 const Login: React.FC = () => {
@@ -72,7 +73,7 @@ const Login: React.FC = () => {
       <div className="login-card">
         <h2>Login</h2>
         
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage && <Error error={errorMessage}/>}
         
         <form onSubmit={handleLogin}>
           <input

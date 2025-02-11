@@ -8,6 +8,7 @@ import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../../graphql/mutations.ts";
 import { setAuth } from "../../redux/slices/authSlice.ts";
 import { Link, useNavigate } from "react-router-dom";
+import Error from "../Error.tsx";
 import "./Signup.css";
 
 const Signup: React.FC = () => {
@@ -30,7 +31,6 @@ const Signup: React.FC = () => {
       }
     },
     onError: (error) => {
-      console.log(error)
       setErrorMessage(error.message);
     },
   });
@@ -49,7 +49,7 @@ const Signup: React.FC = () => {
       <div className="signup-card">
         <h2>Sign Up</h2>
         
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage && <Error error={errorMessage}/>}
         
         <form onSubmit={handleSignup}>
           <input
