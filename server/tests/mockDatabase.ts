@@ -1,7 +1,3 @@
-import "dotenv/config";
-import { beforeAll, afterAll } from "vitest";
-import connectDb, { disconnectDb } from "../helpers/connectDb";
-
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 
@@ -20,4 +16,3 @@ afterAll(async () => {
   await mongoose.disconnect();
   await mongoServer.stop();
 });
-
