@@ -7,6 +7,7 @@ import store from "./redux/store.ts";
 import Login from "./components/auth/Login.tsx";
 import Signup from "./components/auth/Signup.tsx";
 import Dashboard from "./components/Dashboard.tsx";
+import "./App.css";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);

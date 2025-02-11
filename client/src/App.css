@@ -1,14 +1,16 @@
 /* App.css */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     font-family: "Arial", sans-serif;
   }
   
   body {
     background-color: #f4f4f4;
     color: #333;
+    font-family: "Atkinson Hyperlegible Mono", serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+  
   }
   
   .container {
@@ -28,6 +30,9 @@
     text-align: center;
   }
   
+  .card * {
+    margin: 1rem;
+  }
 
 
 /* CSS */
