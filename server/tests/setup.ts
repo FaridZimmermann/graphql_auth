@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import { beforeAll, afterAll } from "vitest";
 
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose from 'mongoose';
+import { MongoMemoryServer } from "mongodb-memory-server";
+import mongoose from "mongoose";
 
 let mongoServer: MongoMemoryServer;
 dotenv.config();

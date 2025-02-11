@@ -1,10 +1,10 @@
 import request from "supertest";
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { ApolloServer } from 'apollo-server-express';
-import express from 'express';
-import http from 'http';
-import  typeDefs from '../src/schema';
-import  resolvers from '../src/resolvers';
+import { ApolloServer } from "apollo-server-express";
+import express from "express";
+import http from "http";
+import  typeDefs from "../src/schema";
+import  resolvers from "../src/resolvers";
 
 const app = express();
 
@@ -23,7 +23,7 @@ beforeAll(async () => {
 
   // Start the HTTP server for testing
   httpServer.listen(4000, () => {
-    console.log('Server is running on port 4000');
+    console.log("Server is running on port 4000");
   });
 });
 
