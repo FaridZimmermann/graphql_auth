@@ -1,3 +1,7 @@
+// Signup.tsx
+// This component provides the user signup functionality. It includes a form where users can 
+// enter their email and password to register a new account and receive a JWT token upon successful signup.
+
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";
@@ -14,6 +18,7 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  //Graphql mutation hook to register a new user
   const [register, { loading, error }] = useMutation(REGISTER_USER, {
     onCompleted: (data) => {
       if (data.register.token) {
@@ -49,6 +54,7 @@ const Signup: React.FC = () => {
         <form onSubmit={handleSignup}>
           <input
             type="email"
+            name="email"
             placeholder="Email"
             className="input-field"
             value={email}
@@ -56,6 +62,7 @@ const Signup: React.FC = () => {
           />
           <input
             type="password"
+            name="password"
             placeholder="Password"
             className="input-field"
             value={password}
@@ -63,6 +70,7 @@ const Signup: React.FC = () => {
           />
           <button
             type="submit"
+            name="signup"
             className="button signup-btn"
             disabled={loading}
           >

@@ -5,6 +5,7 @@
   "dependencies": {
     "@apollo/client": "^3.12.8",
     "@reduxjs/toolkit": "^2.5.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "axios": "^1.7.9",
     "cra-template-typescript": "1.2.0",
     "graphql": "^16.10.0",

@@ -1,3 +1,7 @@
+// Login.tsx
+// This component provides the user login functionality. It includes a form where users can 
+// enter their email and password to authenticate themselves and receive a JWT token on successful login.
+
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";

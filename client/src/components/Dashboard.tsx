@@ -1,3 +1,7 @@
+// Dashboard.tsx
+// This component displays the user dashboard after a successful login or signup. 
+// It shows the user data retrieved from the server and allows the user to log out.
+
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice.ts";
@@ -12,6 +16,7 @@ const Dashboard: React.FC = () => {
   const user = useSelector((state: any) => state.auth.user);
 
   const handleLogout = () => {
+    //Logout User and redirect to login page
     dispatch(logout());
     navigate("/login");
   };

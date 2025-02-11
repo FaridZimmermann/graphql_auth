@@ -10,7 +10,6 @@ import Dashboard from "./components/Dashboard.tsx";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
-  console.log(isAuthenticated)
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 

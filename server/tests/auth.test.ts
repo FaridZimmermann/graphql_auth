@@ -1,26 +1,48 @@
 import request from "supertest";
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import startServer, { startTestServer, stopTestServer  } from "../src/index"; 
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { ApolloServer } from 'apollo-server-express';
+import express from 'express';
+import http from 'http';
+import  typeDefs from '../src/schema';
+import  resolvers from '../src/resolvers';
 
-let server: any;
+const app = express();
 
-beforeEach(async () => {
-  server = await startServer();
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
 });
 
-afterEach(async () => {
-  await stopTestServer();
+// Create an HTTP server instance to listen to requests
+const httpServer = http.createServer(app);
+
+beforeAll(async () => {
+  // Start Apollo Server before the tests begin
+  await server.start();
+  server.applyMiddleware({ app });
+
+  // Start the HTTP server for testing
+  httpServer.listen(4000, () => {
+    console.log('Server is running on port 4000');
+  });
 });
+
+afterAll(async () => {
+  // Ensure the server stops after all tests are complete
+  await server.stop();
+  httpServer.close();
+});
+
+
+//Tests
 
 describe("Authentication Tests", () => {
   const signupMutation = `
     mutation Signup($email: String!, $password: String!) {
-      signup(email: $email, password: $password) {
+      register(email: $email, password: $password) {
         token
-        user {
-          id
-          email
-        }
+        id
+        email
       }
     }
   `;
@@ -29,16 +51,15 @@ describe("Authentication Tests", () => {
     mutation Login($email: String!, $password: String!) {
       login(email: $email, password: $password) {
         token
-        user {
-          id
-          email
-        }
+        id
+        email
+        
       }
     }
   `;
 
   it("should signup a new user", async () => {
-    const response = await request(server)
+    const response = await request(httpServer)
       .post("/graphql")
       .send({
         query: signupMutation,
@@ -47,7 +68,7 @@ describe("Authentication Tests", () => {
           password: "password123",
         },
       });
-      console.error(response.body);
+      console.error("HERE", response.body);
 
     expect(response.body.data.signup.user.email).toBe("test@example.com");
     expect(response.body.data.signup.token).toBeDefined();
@@ -55,7 +76,7 @@ describe("Authentication Tests", () => {
 
   it("should login an existing user", async () => {
     // Ensure user exists before logging in
-    await request(server)
+    await request(httpServer)
       .post("/graphql")
       .send({
         query: signupMutation,
@@ -65,7 +86,7 @@ describe("Authentication Tests", () => {
         },
       });
 
-    const response = await request(server)
+    const response = await request(httpServer)
       .post("/graphql")
       .send({
         query: loginMutation,
@@ -80,7 +101,7 @@ describe("Authentication Tests", () => {
   });
 
   it("should fail login with wrong credentials", async () => {
-    const response = await request(server)
+    const response = await request(httpServer)
       .post("/graphql")
       .send({
         query: loginMutation,
