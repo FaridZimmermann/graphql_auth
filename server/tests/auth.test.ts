@@ -68,10 +68,9 @@ describe("Authentication Tests", () => {
           password: "password123",
         },
       });
-      console.error("HERE", response.body);
 
-    expect(response.body.data.signup.user.email).toBe("test@example.com");
-    expect(response.body.data.signup.token).toBeDefined();
+    expect(response.body.data.register.email).toBe("test@example.com");
+    expect(response.body.data.register.token).toBeDefined();
   });
 
   it("should login an existing user", async () => {
@@ -96,7 +95,7 @@ describe("Authentication Tests", () => {
         },
       });
 
-    expect(response.body.data.login.user.email).toBe("test@example.com");
+    expect(response.body.data.login.email).toBe("test@example.com");
     expect(response.body.data.login.token).toBeDefined();
   });
 

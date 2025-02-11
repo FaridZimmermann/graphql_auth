@@ -11,7 +11,7 @@ const SECRET_KEY = process.env.SECRET_KEY as string;
 const generateToken = (user: any) => {
   // Generates a JWT token for the user
   //args: {user: any}
-    return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string, { expiresIn: "1h" });
+    return jwt.sign({ id: user.id, email: user.email }, process.env.SECRET_KEY as string, { expiresIn: "1h" });
   };
 
 const resolvers: IResolvers = {
@@ -59,6 +59,7 @@ const resolvers: IResolvers = {
             
             const existingUser = await UserModel.findOne({email});
             if(existingUser) throw new Error("User already exists");
+
 
             const hashedPassword = await bcrypt.hash(password, 10);
             const newUser = new UserModel({email, password: hashedPassword});

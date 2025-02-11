@@ -1,11 +1,11 @@
-import "dotenv/config";
+import dotenv from "dotenv";
 import { beforeAll, afterAll } from "vitest";
-import connectDb, { disconnectDb } from "../helpers/connectDb";
 
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 
 let mongoServer: MongoMemoryServer;
+dotenv.config();
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
