@@ -15,7 +15,7 @@ const typeDefs = gql`
 
     type Mutation {
         googleOAuth(token: String!): User,
-        register(email: String!, password: String!): User
+        register(email: String!, password: String!): User,
         login(email: String!, password: String!): User
     }
 

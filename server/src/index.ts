@@ -1,5 +1,5 @@
-import { ApolloServer } from "@apollo/server"; // Apollo Server 4
-import { expressMiddleware } from "@apollo/server/express4"; // Express middleware for Apollo 4
+import { ApolloServer } from "@apollo/server"; 
+import { expressMiddleware } from "@apollo/server/express4"; 
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 import typeDefs from "./schema";
 import resolvers from "./resolvers";
 import { verifyToken } from "../helpers/auth";
+import connectDb from "../helpers/connectDb";
 
 dotenv.config();
 
@@ -16,23 +17,26 @@ const app = express();
 app.use(cors()); 
 app.use(bodyParser.json()); 
 
-const MONGO_URI = process.env.MONGO_URI as string;
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
 
-mongoose.connect(MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
+connectDb();
+let server: ApolloServer | null = null;
 
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers
-});
 
-async function startServer() {
+export default async function startServer() {
+  // Start the Apollo Server, set Middleware
+  if (!server) {
+
+  server = new ApolloServer({
+    typeDefs,
+    resolvers
+  });
+  
   await server.start(); 
-
+}
+ if(app) {
   app.use(
     "/graphql",
     expressMiddleware(server, {
@@ -49,6 +53,39 @@ async function startServer() {
     console.log(`Server running at http://localhost:${PORT}/graphql`);
   });
 }
+}
+
+export async function startTestServer() {
+  // Start the Apollo Server, set Middleware for testing
+
+    if (!server) {
+          server = new ApolloServer({
+            typeDefs,
+            resolvers,
+          });
+          await server.start();
+          console.log("Server started")
+    }
+
+    if (!app) {
+        const app = express();
+        app.use(cors());
+        app.use(bodyParser.json());
+        app.use("/graphql", expressMiddleware(server));
+    }
+    return app;
+  }
+
+  export async function stopTestServer() {
+    if (server) {
+      try {
+        await server.stop();
+      } catch (error) {
+        console.error("Error stopping Apollo Server:", error);
+      }
+      server = null;
+    }
+  }
   
   
 

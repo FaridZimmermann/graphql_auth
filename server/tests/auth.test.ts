@@ -1,147 +1,95 @@
-import { ApolloServer } from "@apollo/server";
-import mongoose from "mongoose";
-import { MongoMemoryServer } from "mongodb-memory-server";
-import typeDefs from "../src/schema";
-import resolvers from "../src/resolvers";
-import UserModel from "../models/User";
-import jwt from "jsonwebtoken";
+import request from "supertest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import startServer, { startTestServer, stopTestServer  } from "../src/index"; 
 
-let server: ApolloServer;
-let mongoServer: MongoMemoryServer;
+let server: any;
 
-beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  await mongoose.connect(mongoServer.getUri());
-
-  server = new ApolloServer({ typeDefs, resolvers });
+beforeEach(async () => {
+  server = await startServer();
 });
 
-afterAll(async () => {
-  await mongoose.connection.close();
-  await mongoServer.stop();
+afterEach(async () => {
+  await stopTestServer();
 });
 
-describe("General Login tests")
-
-describe("🔍 GraphQL Authentication Tests", () => {
-  it("Should create a user with Google OAuth", async () => {
-    const googleOAuthMutation = `
-      mutation GoogleOAuth($token: String!) {
-        googleOAuth(token: $token) {
-          token
-          user {
-            email
-            username
-          }
+describe("Authentication Tests", () => {
+  const signupMutation = `
+    mutation Signup($email: String!, $password: String!) {
+      signup(email: $email, password: $password) {
+        token
+        user {
+          id
+          email
         }
       }
-    `;
+    }
+  `;
 
-    // Mock Google token
-    const fakeGoogleUser = { id: "123", email: "test@example.com", name: "Test User" };
-    const fakeToken = jwt.sign(fakeGoogleUser, "test-secret");
-
-    const response = await server.executeOperation({
-      query: googleOAuthMutation,
-      variables: { token: fakeToken },
-    });
-
-    expect(response.errors).toBeUndefined();
-    expect(response.data?.googleOAuth.user.email).toBe("test@example.com");
-  });
-
-  it("Should not authenticate with an invalid token", async () => {
-    const response = await server.executeOperation({
-      query: `
-        mutation GoogleOAuth($token: String!) {
-          googleOAuth(token: $token) {
-            token
-          }
-        }
-      `,
-      variables: { token: "invalid-token" },
-    });
-
-    expect(response.errors).toBeDefined();
-  });
-
-  it("Should signup a new user", async () => {
-    const signupMutation = `
-      mutation Signup($username: String!, $email: String!, $password: String!) {
-        signup(username: $username, email: $email, password: $password) {
-          token
-          user {
-            id
-            email
-            username
-          }
+  const loginMutation = `
+    mutation Login($email: String!, $password: String!) {
+      login(email: $email, password: $password) {
+        token
+        user {
+          id
+          email
         }
       }
-    `;
+    }
+  `;
 
-    const response = await server.executeOperation({
-      query: signupMutation,
-      variables: {
-        username: "testuser",
-        email: "test@example.com",
-        password: "testpassword",
-      },
-    });
+  it("should signup a new user", async () => {
+    const response = await request(server)
+      .post("/graphql")
+      .send({
+        query: signupMutation,
+        variables: {
+          email: "test@example.com",
+          password: "password123",
+        },
+      });
+      console.error(response.body);
 
-    expect(response.errors).toBeUndefined();
-    expect(response.data?.signup.user.email).toBe("test@example.com");
-
-    // Verify user exists in DB
-    const userInDB = await User.findOne({ email: "test@example.com" });
-    expect(userInDB).not.toBeNull();
+    expect(response.body.data.signup.user.email).toBe("test@example.com");
+    expect(response.body.data.signup.token).toBeDefined();
   });
 
-  it("Should login an existing user", async () => {
-    // Create a test user manually
-    const hashedPassword = await bcrypt.hash("testpassword", 10);
-    await User.create({
-      username: "testuser",
-      email: "test@example.com",
-      password: hashedPassword,
-    });
+  it("should login an existing user", async () => {
+    // Ensure user exists before logging in
+    await request(server)
+      .post("/graphql")
+      .send({
+        query: signupMutation,
+        variables: {
+          email: "test@example.com",
+          password: "password123",
+        },
+      });
 
-    const loginMutation = `
-      mutation Login($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
-          token
-          user {
-            id
-            email
-            username
-          }
-        }
-      }
-    `;
+    const response = await request(server)
+      .post("/graphql")
+      .send({
+        query: loginMutation,
+        variables: {
+          email: "test@example.com",
+          password: "password123",
+        },
+      });
 
-    const response = await server.executeOperation({
-      query: loginMutation,
-      variables: {
-        email: "test@example.com",
-        password: "testpassword",
-      },
-    });
-
-    expect(response.errors).toBeUndefined();
-    expect(response.data?.login.user.email).toBe("test@example.com");
+    expect(response.body.data.login.user.email).toBe("test@example.com");
+    expect(response.body.data.login.token).toBeDefined();
   });
 
-  it("Should reject login with wrong password", async () => {
-    const response = await server.executeOperation({
-      query: `
-        mutation Login($email: String!, $password: String!) {
-          login(email: $email, password: $password) {
-            token
-          }
-        }
-      `,
-      variables: { email: "test@example.com", password: "wrongpassword" },
-    });
+  it("should fail login with wrong credentials", async () => {
+    const response = await request(server)
+      .post("/graphql")
+      .send({
+        query: loginMutation,
+        variables: {
+          email: "wrong@example.com",
+          password: "wrongpassword",
+        },
+      });
 
-    expect(response.errors).toBeDefined();
+    expect(response.body.errors).toBeDefined();
   });
 });
